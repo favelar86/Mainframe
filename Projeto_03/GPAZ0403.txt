@@ -1,0 +1,355 @@
+      *--------------------------------------------------------------*
+      *                                                              *
+      *   OBJETIVO: CALCULAR A SIMULACAO DE EMPRESTIMOS FORNECIDOS   *
+      *             VIA SIMUEMP E GRAVAR EMPAPROV                    *
+      *                                                              *
+      *--------------------------------------------------------------*
+      *--------------------------------------------------------------*
+       IDENTIFICATION                      DIVISION.
+      *--------------------------------------------------------------*
+       PROGRAM-ID.                         GPAZ0403.
+       AUTHOR.                             FABIANO.
+       DATE-WRITTEN.                       14/09/2020.
+       DATE-COMPILED.                      14/09/2020.
+       SECURITY.                           NENHUMA.
+      *--------------------------------------------------------------*
+       ENVIRONMENT                         DIVISION.
+      *--------------------------------------------------------------*
+       CONFIGURATION                       SECTION.
+       SOURCE-COMPUTER.                    NOTEBRQ.
+       OBJECT-COMPUTER.                    HERCULES1.
+       SPECIAL-NAMES.
+           DECIMAL-POINT IS COMMA.
+      *
+       INPUT-OUTPUT                        SECTION.
+      * ETAPA 1: ESPECIFICACAO DOS ARQUIVOS DE ENTRADA E SAIDA
+       FILE-CONTROL.
+           SELECT SIMUEMP ASSIGN           TO UT-S-SIMUEMP
+           ORGANIZATION IS SEQUENTIAL
+           ACCESS MODE IS SEQUENTIAL
+           FILE STATUS IS FS-SIMUEMP
+           .
+           SELECT EMPAPROV ASSIGN          TO UT-S-EMPAPROV
+           ORGANIZATION IS SEQUENTIAL
+           ACCESS MODE IS SEQUENTIAL
+           FILE STATUS IS FS-EMPAPROV
+           .
+      *--------------------------------------------------------------*
+       DATA                                DIVISION.
+      *--------------------------------------------------------------*
+       FILE                                SECTION.
+      * ETAPA 2: DETALHAMANETO DOS ARQUIVOS DE ENTRADA E SAIDA
+      *
+       FD  SIMUEMP
+           LABEL RECORD STANDARD
+           BLOCK CONTAINS 0 RECORDS
+           RECORDING MODE IS F
+           RECORD CONTAINS 18 CHARACTERS
+           DATA RECORD IS REG-SIMUEMP
+           .
+       01  REG-SIMUEMP.
+           05 NUM-SIMULACAO-S              PIC 9(04).
+           05 VAL-EMPRESTIMO-S             PIC 9(06)V99.
+           05 TX-JUROS-S                   PIC 9(02)V99.
+           05 QTD-PARCELAS-S               PIC 9(02).
+      *
+       FD  EMPAPROV
+           LABEL RECORD STANDARD
+           BLOCK CONTAINS 0 RECORDS
+           RECORDING MODE IS F
+           RECORD CONTAINS 35 CHARACTERS
+           DATA RECORD IS REG-EMPAPROV
+           .
+       01  REG-EMPAPROV.
+           05 NUM-SIMULACAO-E              PIC 9(04).
+           05 VAL-EMPRESTIMO-E             PIC 9(06)V99.
+           05 TX-JUROS-E                   PIC 9(02)V99.
+           05 QTD-PARCELAS-E               PIC 9(02).
+           05 VALOR-PARCELA-E              PIC 9(06)V99.
+           05 TOTAL-EMP-E                  PIC 9(07)V99.
+      *--------------------------------------------------------------*
+       WORKING-STORAGE                     SECTION.
+      *
+      * DECLARANDO AS VARIAVEIS DE TEMPO
+      *==> VARIAVEL PARA RECEBER O HORARIO PARA INICIO DO PROCESSAMENTO
+       01  WS-HORARIO-INICIAL.
+           05 WS-HORA-I                    PIC 9(02).
+           05 WS-MIN-I                     PIC 9(02).
+           05 WS-SEG-I                     PIC 9(02).
+           05 WS-CENT-I                    PIC 9(02).
+      *
+      *==> VARIAVEL PARA RECEBER O HORARIO DE TERMINO DO PROCESSAMENTO
+       01  WS-HORARIO-FINAL.
+           05 WS-HORA-F                    PIC 9(02).
+           05 WS-MIN-F                     PIC 9(02).
+           05 WS-SEG-F                     PIC 9(02).
+           05 WS-CENT-F                    PIC 9(02).
+      *
+      *==> VARIAVEL PARA ARMAZENAR A DIFERENCA ENTRE HORARIO DE INICIO
+      * E TERMINO DO PROCEDIMENTO EM CENTESIMOS DE SEGUNDOS
+       77 WS-DIFERENCA                     PIC 9(07).
+      *
+      *==> VARIAVEL PARA RECEBER O TEMPO DO PROCESSAMENTO SEM FORMATACAO
+       01  WS-TEMPO-PROCESSAMENTO.
+           05 WS-HORA-P                    PIC 9(02).
+           05 WS-MIN-P                     PIC 9(02).
+           05 WS-SEG-P                     PIC 9(02).
+           05 WS-CENT-P                    PIC 9(02).
+      *
+      *==> VARIAVEL PARA RECEBER O TEMPO DO PROCESSAMENTO COM FORMATCAO
+       01  WS-TEMPO-PROCESSAMENTO-PF.
+           05 WS-HORA-PF                   PIC 99.
+           05 FILLER                       PIC X(01)
+                                                   VALUE ":".
+           05 WS-MIN-PF                    PIC 99.
+           05 FILLER                       PIC X(01)
+                                                   VALUE ":".
+           05 WS-SEG-PF                    PIC 99.
+           05 FILLER                       PIC X(01)
+                                                   VALUE ":".
+           05 WS-CENT-PF                   PIC 99.
+      *
+      * DECLARACAO DAS VARIAVEIS DE DATA
+      *==> VARIAVEL PARA RECEBER A DATA DO SISTEMA
+       01  WS-DATA-SISTEMA.
+           05 WS-ANO                       PIC 9(02).
+           05 WS-MES                       PIC 9(02).
+           05 WS-DIA                       PIC 9(02).
+      *==> VARIAVEL PARA RECEBER DATA NO FORMATO JULIANO
+       01  WS-DATA-JUL.
+           05 WS-ANO-J                     PIC 9(02).
+           05 WS-DIA-J                     PIC 9(03).
+      * MASCARA PARA FORMATAR DATA
+       01  WS-DATA-SISTEMA-F.
+           05 WS-DIA                       PIC 9(02).
+           05 FILLER                       PIC X(01)
+                                                   VALUE '/'.
+           05 WS-MES                       PIC 9(02).
+           05 FILLER                       PIC X(01)
+                                                   VALUE '/'.
+       05 WS-ANO                           PIC 9(02).
+      *
+       77 WS-MES-EXT                       PIC X(09).
+       77 WS-DIA-SEMANA                    PIC 9.
+       77 WS-DIA-SEMANA-F                  PIC X(13).
+      *
+       01  WS-REG-SIMUEMP.
+           05 WS-NUM-SIMULACAO-S           PIC 9(04).
+           05 WS-VAL-EMPRESTIMO-S          PIC 9(06)V99.
+           05 WS-JUROS-S                   PIC 9(02)V99.
+           05 WS-QTD-PARCELAS-S            PIC 9(02).
+      *
+       01  WS-REG-EMPAPROV.
+           05 WS-NUM-SIMULACAO-E           PIC 9(04).
+           05 WS-VAL-EMPRESTIMO-E          PIC 9(06)V99.
+           05 WS-JUROS-E                   PIC 9(02)V99.
+           05 WS-QTD-PARCELAS-E            PIC 9(02).
+           05 WS-VALOR-PARCELA-E           PIC 9(07)V99.
+           05 WS-TOTAL-EMP-E               PIC 9(07)V99.
+       77  WS-VAL-PARCELA-AUX              PIC 9(07)V99.
+       77  WS-VAL-TOTAL-AUX                PIC 9(08)V99.
+       77  WS-CTLIDO                       PIC 9(04) COMP.
+       77  WS-CTAPROV                      PIC 9(04) COMP.
+       77  WS-CTREPROV                     PIC 9(04) COMP.
+      * DECLARANDO AS VARIAVEIS FORMATADAS
+       77  WS-CTLIDO-F                     PIC ZZZ9.
+       77  WS-CTAPROV-F                    PIC ZZZ9.
+       77  WS-CTREPROV-F                   PIC ZZZ9.
+      *
+      * DECLARANDO AS VARIAVEIS DE FILE STATUS
+       77  FS-SIMUEMP                      PIC X(02).
+       77  FS-EMPAPROV                     PIC X(02).
+       77  WS-FS                           PIC X(02).
+       77  WS-MSG                          PIC X(60).
+      *--------------------------------------------------------------*
+       LINKAGE                             SECTION.
+      * ESTA SECTION FICARA VAZIA POIS NAO RECEBE DADOS DE OUTROS PROG
+      *--------------------------------------------------------------*
+       PROCEDURE                           DIVISION.
+      *--------------------------------------------------------------*
+      * ETAPA 3: MANIPULACAO DOS ARQUIVOS DE ENTRADA E SAIDA
+       0000-GPAZ0403.
+           PERFORM 1000-INICIALIZAR
+           PERFORM 2000-PROCESSAR
+                   UNTIL FS-SIMUEMP = "10"
+           PERFORM 3000-TERMINO
+           STOP RUN
+           .
+       1000-INICIALIZAR.
+           ACCEPT WS-HORARIO-INICIAL FROM TIME
+           MOVE 0                TO WS-CTLIDO
+                                    WS-CTAPROV
+                                    WS-CTREPROV
+           OPEN INPUT SIMUEMP
+           IF FS-SIMUEMP NOT = "00"
+              MOVE "ERRO ABERTURA SIMUEMP" TO WS-MSG
+              MOVE FS-SIMUEMP              TO WS-FS
+              GO TO 999-ERRO
+           END-IF
+      *
+           OPEN OUTPUT EMPAPROV
+           IF FS-EMPAPROV NOT = "00"
+             MOVE "ERRO ABERTURA EMPAPROV" TO WS-MSG
+             MOVE FS-EMPAPROV              TO WS-FS
+             GO TO 999-ERRO
+           END-IF
+           PERFORM 1500-LER-SIMUEMP
+           .
+       1500-LER-SIMUEMP.
+           READ SIMUEMP INTO WS-REG-SIMUEMP
+           IF FS-SIMUEMP = "00"
+              ADD 1 TO WS-CTLIDO
+           ELSE
+              IF FS-SIMUEMP NOT = "10"
+                 MOVE "ERRO LEITURA SIMUEMP"
+                                           TO WS-MSG
+                 MOVE FS-SIMUEMP           TO WS-FS
+                 GO TO 999-ERRO
+              END-IF
+           END-IF
+           .
+       2000-PROCESSAR.
+           IF WS-VAL-EMPRESTIMO-S NOT < 100000
+              AND WS-QTD-PARCELAS-S  NOT < 50
+              COMPUTE WS-CTREPROV = WS-CTREPROV + 1
+           ELSE
+              COMPUTE WS-VAL-PARCELA-AUX = (WS-VAL-EMPRESTIMO-S *
+              WS-JUROS-S / 100)  / (1 - 1 / (1 + WS-JUROS-S / 100 )
+              ** WS-QTD-PARCELAS-S)
+      *
+              COMPUTE WS-VAL-TOTAL-AUX = WS-VAL-PARCELA-AUX *
+                                         WS-QTD-PARCELAS-S
+      *
+              MOVE WS-NUM-SIMULACAO-S      TO WS-NUM-SIMULACAO-E
+              MOVE WS-VAL-EMPRESTIMO-S     TO WS-VAL-EMPRESTIMO-E
+              MOVE WS-JUROS-S              TO WS-JUROS-E
+              MOVE WS-QTD-PARCELAS-S       TO WS-QTD-PARCELAS-E
+              MOVE WS-VAL-PARCELA-AUX      TO WS-VALOR-PARCELA-E
+              MOVE WS-VAL-TOTAL-AUX        TO WS-TOTAL-EMP-E
+      *---------------------------------------------------------------*
+              WRITE REG-EMPAPROV FROM WS-REG-EMPAPROV
+              IF FS-EMPAPROV = "00"
+                 COMPUTE WS-CTAPROV = WS-CTAPROV + 1
+              ELSE
+                 MOVE "ERRO GRAVACAO FS-EMPAPROV"
+                                           TO WS-MSG
+                 MOVE FS-EMPAPROV          TO WS-FS
+                 GO TO 999-ERRO
+              END-IF
+           END-IF
+           PERFORM 1500-LER-SIMUEMP
+           .
+       3000-TERMINO.
+           PERFORM 9000-IMPRIME-DATA.
+           CLOSE SIMUEMP
+           IF FS-SIMUEMP NOT = "00"
+               MOVE "ERRO FECHAMENTO FS-SIMUEMP"
+                                           TO WS-MSG
+               MOVE FS-SIMUEMP             TO WS-FS
+               GO TO 999-ERRO
+           END-IF
+           CLOSE EMPAPROV
+           IF FS-EMPAPROV NOT = "00"
+               MOVE "ERRO FECHAMENTO FS-EMPAPORV"
+                                           TO WS-MSG
+               MOVE FS-EMPAPROV            TO WS-FS
+               GO TO 999-ERRO
+           END-IF
+           ACCEPT WS-HORARIO-FINAL FROM TIME
+      * CALCULA TEMPO DE PROCESSAMENTO EM SEGUNDOS
+           COMPUTE WS-DIFERENCA = ( WS-HORA-F * 360000 +
+                                    WS-MIN-F  *   6000 +
+                                    WS-SEG-F  *    100 +
+                                    WS-CENT-F)         -
+                                  ( WS-HORA-I * 360000 +
+                                    WS-MIN-I  *   6000 +
+                                    WS-SEG-I  *    100 +
+                                    WS-CENT-I)
+      * CALCULA E ARMAZENA O TEMPO DE PROCESSAMENTO
+           COMPUTE WS-HORA-P = WS-DIFERENCA / 360000
+           COMPUTE WS-DIFERENCA = WS-DIFERENCA - WS-HORA-P * 360000
+           COMPUTE WS-MIN-P = WS-DIFERENCA / 6000
+           COMPUTE WS-DIFERENCA = WS-DIFERENCA - WS-MIN-P * 6000
+           COMPUTE WS-SEG-P = WS-DIFERENCA / 100
+           COMPUTE WS-DIFERENCA = WS-DIFERENCA - WS-SEG-P * 100
+           COMPUTE WS-CENT-P = WS-DIFERENCA
+      *
+      * MOVER OS TEMPOS CALCULADOS PARA A VARIAVEIS FORMATADAS
+           MOVE WS-HORA-P                  TO WS-HORA-PF
+           MOVE WS-MIN-P                   TO WS-MIN-PF
+           MOVE WS-SEG-P                   TO WS-SEG-PF
+           MOVE WS-CENT-P                  TO WS-CENT-PF
+      *
+           MOVE WS-CTLIDO                  TO WS-CTLIDO-F
+           MOVE WS-CTAPROV                 TO WS-CTREPROV-F
+           MOVE WS-CTREPROV                TO WS-CTAPROV-F
+      *
+      * FAZER OS CALCULOS DOS TEMPOS DE PROCESSAMENTO PAG 122
+      * MOVER O TEMPO DE PROCESSAMENTO PARA VARIAVEIS FORMATADAS
+           DISPLAY "================================================="
+           DISPLAY "TOTAL DE SIMULACOES LIDAS.......: " WS-CTLIDO-F
+           DISPLAY "TOTAL DE SIMULACOES APROVADAS...: " WS-CTAPROV-F
+           DISPLAY "TOTAL DE SIMULACOES REPROVADAS..: " WS-CTREPROV-F
+           DISPLAY "TEMPO TOTAL DE PROCESSAMENTO ...: "
+                                            WS-TEMPO-PROCESSAMENTO-PF
+      * EXIBIR O TEMPO FORMATADO CONFORME O LAYOUT DA PAG 121
+           DISPLAY "================================================="
+           DISPLAY "==        TERMINO NORMAL DO GPAZ0403           =="
+           DISPLAY "================================================="
+           .
+       9000-IMPRIME-DATA.
+           ACCEPT WS-DATA-SISTEMA FROM DATE
+           ACCEPT WS-DATA-JUL FROM DAY
+           ACCEPT WS-DIA-SEMANA FROM DAY-OF-WEEK
+           MOVE CORR WS-DATA-SISTEMA TO WS-DATA-SISTEMA-F
+      * IDENTIFICACAO DE MES DA DATA GREGORIANA 02
+           EVALUATE WS-MES OF WS-DATA-SISTEMA
+              WHEN 01 MOVE 'JANEIRO'               TO WS-MES-EXT
+              WHEN 02 MOVE 'FEVEREIRO'             TO WS-MES-EXT
+              WHEN 03 MOVE 'MARCO'                 TO WS-MES-EXT
+              WHEN 04 MOVE 'ABRIL'                 TO WS-MES-EXT
+              WHEN 05 MOVE 'MAIO'                  TO WS-MES-EXT
+              WHEN 06 MOVE 'JUNHO'                 TO WS-MES-EXT
+              WHEN 07 MOVE 'JULHO'                 TO WS-MES-EXT
+              WHEN 08 MOVE 'AGOSTO'                TO WS-MES-EXT
+              WHEN 09 MOVE 'SETEMBRO'              TO WS-MES-EXT
+              WHEN 10 MOVE 'OUTUBRO'               TO WS-MES-EXT
+              WHEN 11 MOVE 'NOVEMBRO'              TO WS-MES-EXT
+              WHEN 12 MOVE 'DEZEMBRO'              TO WS-MES-EXT
+           END-EVALUATE
+      * IDENTIFICACAO DO DIA DA SEMANA POR ESTENSO
+           EVALUATE WS-DIA-SEMANA
+              WHEN 1 MOVE 'SEGUNDA'                 TO WS-DIA-SEMANA-F
+              WHEN 2 MOVE 'TERCA'                   TO WS-DIA-SEMANA-F
+              WHEN 3 MOVE 'QUARTA'                  TO WS-DIA-SEMANA-F
+              WHEN 4 MOVE 'QUINTA'                  TO WS-DIA-SEMANA-F
+              WHEN 5 MOVE 'SEXTA'                   TO WS-DIA-SEMANA-F
+              WHEN 6 MOVE 'SABADO'                  TO WS-DIA-SEMANA-F
+              WHEN 7 MOVE 'DOMINGO'                 TO WS-DIA-SEMANA-F
+           END-EVALUATE
+      *
+           DISPLAY '*************************************************'
+           DISPLAY 'DATA GREGORIANA 1 - ' WS-DATA-SISTEMA-F
+           DISPLAY 'DATA GREGORIANA 2 - ' WS-DIA OF
+                                          WS-DATA-SISTEMA
+                                        ' DE '
+                                          WS-MES-EXT
+                                        ' DE 20'
+                                          WS-ANO OF
+                                          WS-DATA-SISTEMA
+           DISPLAY 'DATA JULIANA      - ' WS-DIA-J
+                                        ' DE 20'
+                                          WS-ANO-J
+           DISPLAY 'DIA DA SEMANA     - ' WS-DIA-SEMANA-F
+           DISPLAY '*************************************************'
+           .
+       999-ERRO.
+           DISPLAY "================================================="
+           DISPLAY " MENSAGEM ..........: " WS-MSG
+           DISPLAY "FILE STATUS.........: " WS-FS
+           DISPLAY "================================================="
+           DISPLAY "==    TERMINO ANORMAL DO PROGRAMA GPAZ0403     =="
+           DISPLAY "================================================="
+           MOVE  16                        TO RETURN-CODE
+           STOP RUN
+           .
