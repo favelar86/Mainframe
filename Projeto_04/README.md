@@ -5,7 +5,7 @@ Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte trei
 
 ## Objetivo
 
-O programa realiza um merge entre três arquivos de entrada CLISP, CLIRJ, CLIMG granavndo em um arquivo de saída CLIUNIF.
+O programa realiza um merge entre três arquivos de entrada CLISP, CLIRJ, CLIMG gravando em um arquivo de saída CLIUNIF.
 
 ### Arquivos
 
