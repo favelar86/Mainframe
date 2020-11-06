@@ -1,4 +1,4 @@
-# Projeto_02
+# Projeto_03
 ## Simulador de empréstimos com saída formatada
 
 Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinametos.
