@@ -15,6 +15,14 @@ O programa realiza um merge entre três arquivos de entrada CLISP, CLIRJ, CLIMG 
 * CLIUNIF
 * PGMAUX01
 
+### Booklib
+
+* CADCLI
+* VARDATA
+* VARTEMPO
+* ROTDATA
+* ROTERRO
+
 ### Resultados
 
 ![SYSOUT](sysout_01.png)

@@ -1,0 +1,9 @@
+      *
+       01  :XX-:REG-CLI:YY:.
+           05 :XX-:CPFCLI-:YY:             PIC X(11).
+           05 :XX-:NOMECLI-:YY:            PIC X(25).
+           05 :XX-:ENDCLI-:YY:             PIC X(30).
+           05 :XX-:FONECLI-:YY:            PIC X(10).
+           05 :XX-:TOTALCOMPRAS-:YY:       PIC 9(08)V99.
+           05 :XX-:ULTIMACOMPRA-:YY:       PIC X(08).
+      *
