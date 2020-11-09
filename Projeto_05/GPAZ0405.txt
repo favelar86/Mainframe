@@ -1,7 +1,7 @@
       *--------------------------------------------------------------*
       *                                                              *
-      *   OBJETIVO: CALCULAR A SIMULACAO DE EMPRESTIMOS FORNECIDOS   *
-      *             VIA SIMUEMP E GRAVAR EMPAPROV                    *
+      *   OBJETIVO: MERGE ENTRE 3 ARQUIVOS ALEM DE VERIFICAR ATARVES *
+      *             DE UM SUB-PROGRAMA O CPF DO CLIENTE              *
       *                                                              *
       *--------------------------------------------------------------*
       *--------------------------------------------------------------*
