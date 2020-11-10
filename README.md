@@ -8,3 +8,4 @@
 * [Simulador de empréstimos com dados fornecidos via SIMUEMP e gravado em EMPAPROV](https://github.com/favelar86/Mainframe/tree/main/Projeto_03)
 * [Merge entre três arquivos de entrada](https://github.com/favelar86/Mainframe/tree/main/Projeto_04)
 * [Merge entre três arquivos de entrada e verificação CPF válidos](https://github.com/favelar86/Mainframe/tree/main/Projeto_05)
+* [Balance line entre dois arquivos de entrada](https://github.com/favelar86/Mainframe/tree/main/Projeto_06)

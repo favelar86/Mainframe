@@ -1,0 +1,9 @@
+      *
+       01  :XX-:REG-CLIMOV.
+           05 :XX-:CODCLI-M               PIC X(04).
+           05 :XX-:NOMECLI-M              PIC X(25).
+           05 :XX-:ENDCLI-M               PIC X(30).
+           05 :XX-:FONECLI-M              PIC X(10).
+           05 :XX-:TOTALDIVIDA-M          PIC 9(08)V99.
+           05 :XX-:TIPOMOV-M              PIC X(01).
+      *

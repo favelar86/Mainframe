@@ -1,0 +1,8 @@
+      *
+       01  :XX-:REG-CLI:YYY:.
+           05 :XX-:CODCLI-:ZZ:             PIC X(04).
+           05 :XX-:NOMECLI-:ZZ:            PIC X(25).
+           05 :XX-:ENDCLI-:ZZ:             PIC X(30).
+           05 :XX-:FONECLI-:ZZ:            PIC X(10).
+           05 :XX-:TOTALDIVIDA-:ZZ:        PIC 9(08)V99.
+      *

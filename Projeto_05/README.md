@@ -22,6 +22,7 @@ O programa realiza um merge entre três arquivos de entrada CLISP, CLIRJ, CLIMG 
 * VARTEMPO
 * ROTDATA
 * ROTERRO
+* CALCTEMP
 
 ### Resultados
 

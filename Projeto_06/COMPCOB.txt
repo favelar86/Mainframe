@@ -1,0 +1,10 @@
+//GPAZ0406 JOB FABIANO,MSGCLASS=X,CLASS=C,NOTIFY=&SYSUID,TIME=(0,20)    00010099
+//*****************************************************************     00020016
+//* JOB DE COMPILACAO PROGRAMA COBOL BATCH                              00030016
+//* TROCAR NN POR SEU NUMERO                                            00040099
+//*************************************************************         00080016
+// JCLLIB   ORDER=GP.LB.PROCLIB                                         00090016
+//COBCOMP  EXEC DFHCOBOL,INSTR='GPAZ04',NOME='GPAZ0406'                 00100099
+//LKED.SYSIN    DD   *                                                  00110016
+  NAME GPAZ0406(R)                                                      00120099
+/*                                                                      00130016

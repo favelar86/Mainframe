@@ -1,0 +1,42 @@
+      *--------------------------------------------------------------*
+      *                                                              *
+      *          BOOK DE ARQUIVO     - VARIAVEIS DE DATA             *
+      *          NOME DO BOOK        - VARDATA                       *
+      *          NOME DO PDS         - GP.GPAZ04.BOOKLIB             *
+      *          NOME DO ARQUIVO     - VARDATA                       *
+      *          TAMANHO DO REGISTRO - 42 BYTES                      *
+      *                                                              *
+      *--------------------------------------------------------------*
+      *
+      * DECLARACAO DAS VARIAVEIS DE DATA
+      *==> VARIAVEL PARA RECEBER A DATA DO SISTEMA
+       01  WS-DATA-SISTEMA.
+           05 WS-ANO                       PIC 9(02).
+           05 WS-MES                       PIC 9(02).
+           05 WS-DIA                       PIC 9(02).
+      *==> VARIAVEL PARA RECEBER DATA NO FORMATO JULIANO
+       01  WS-DATA-JUL.
+           05 WS-ANO-J                     PIC 9(02).
+           05 WS-DIA-J                     PIC 9(03).
+      * MASCARA PARA FORMATAR DATA
+       01  WS-DATA-SISTEMA-F.
+           05 WS-DIA                       PIC 9(02).
+           05 FILLER                       PIC X(01)
+                                                   VALUE '/'.
+           05 WS-MES                       PIC 9(02).
+           05 FILLER                       PIC X(01)
+                                                   VALUE '/'.
+       05 WS-ANO                           PIC 9(02).
+      *
+      * MASCARA PARA FORMATAR DATA-2
+       01  WS-DATA-SISTEMA-2-F.
+           05 WS-DIA                       PIC 9(02).
+           05 FILLER                       PIC X(01)
+                                                   VALUE '/'.
+           05 WS-MES                       PIC 9(02).
+           05 FILLER                       PIC X(03)
+                                                   VALUE '/20' .
+       05 WS-ANO                           PIC 9(02).
+       77 WS-MES-EXT                       PIC X(09).
+       77 WS-DIA-SEMANA                    PIC 9.
+       77 WS-DIA-SEMANA-F                  PIC X(13).
