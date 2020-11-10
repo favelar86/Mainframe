@@ -1,5 +1,5 @@
-# Projeto_05
-## Merge entre três arquivos de entrada
+# Projeto_06
+## Balance line entre dois arquivos de entrada
 
 Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinametos.
 
