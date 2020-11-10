@@ -1,0 +1,48 @@
+      *--------------------------------------------------------------*
+      *                                                              *
+      *          BOOK DE ARQUIVO     - VARIAVEIS DE TEMPO            *
+      *          NOME DO BOOK        - VARTEMPO                      *
+      *          NOME DO PDS         - GP.GPAZ04.BOOKLIB             *
+      *          NOME DO ARQUIVO     - VARTEMPO                      *
+      *          TAMANHO DO REGISTRO - 31 BYTES                      *
+      *                                                              *
+      *--------------------------------------------------------------*
+      *
+      * DECLARANDO AS VARIAVEIS DE TEMPO
+      *==> VARIAVEL PARA RECEBER O HORARIO PARA INICIO DO PROCESSAMENTO
+       01  WS-HORARIO-INICIAL.
+           05 WS-HORA-I                    PIC 9(02).
+           05 WS-MIN-I                     PIC 9(02).
+           05 WS-SEG-I                     PIC 9(02).
+           05 WS-CENT-I                    PIC 9(02).
+      *
+      *==> VARIAVEL PARA RECEBER O HORARIO DE TERMINO DO PROCESSAMENTO
+       01  WS-HORARIO-FINAL.
+           05 WS-HORA-F                    PIC 9(02).
+           05 WS-MIN-F                     PIC 9(02).
+           05 WS-SEG-F                     PIC 9(02).
+           05 WS-CENT-F                    PIC 9(02).
+      *
+      *==> VARIAVEL PARA ARMAZENAR A DIFERENCA ENTRE HORARIO DE INICIO
+      * E TERMINO DO PROCEDIMENTO EM CENTESIMOS DE SEGUNDOS
+       77 WS-DIFERENCA                     PIC 9(07).
+      *
+      *==> VARIAVEL PARA RECEBER O TEMPO DO PROCESSAMENTO SEM FORMATACAO
+       01  WS-TEMPO-PROCESSAMENTO.
+           05 WS-HORA-P                    PIC 9(02).
+           05 WS-MIN-P                     PIC 9(02).
+           05 WS-SEG-P                     PIC 9(02).
+           05 WS-CENT-P                    PIC 9(02).
+      *
+      *==> VARIAVEL PARA RECEBER O TEMPO DO PROCESSAMENTO COM FORMATCAO
+       01  WS-TEMPO-PROCESSAMENTO-PF.
+           05 WS-HORA-PF                   PIC 99.
+           05 FILLER                       PIC X(01)
+                                                   VALUE ":".
+           05 WS-MIN-PF                    PIC 99.
+           05 FILLER                       PIC X(01)
+                                                   VALUE ":".
+           05 WS-SEG-PF                    PIC 99.
+           05 FILLER                       PIC X(01)
+                                                   VALUE ":".
+           05 WS-CENT-PF                   PIC 99.
