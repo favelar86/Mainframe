@@ -1,5 +1,5 @@
 # Projeto_08
-## Relatório de movimentação de estoque
+## Relatório de atualização de estoque
 
 Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinametos.
 
