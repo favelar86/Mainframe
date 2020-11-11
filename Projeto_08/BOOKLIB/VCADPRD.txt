@@ -1,0 +1,13 @@
+      *
+       01  :XX-:REG-VCADPRD.
+           05 :XX-:CODPROD-V               PIC X(04).
+           05 :XX-:DESCPROD-V              PIC X(20).
+           05 :XX-:UNIPROD-V               PIC X(05).
+           05 :XX-:LOCALPROD-V             PIC X(05).
+           05 :XX-:QTDEST-V                PIC 9(05).
+           05 :XX-:QTDMAX-V                PIC X(05).
+           05 :XX-:QTDMIN-V                PIC 9(05).
+           05 :XX-:PRECOCOMPRA-V           PIC 9(06)V99.
+           05 :XX-:PRECOVENDA-V            PIC 9(06)V99.
+           05 :XX-:PERCOMIS-V              PIC 9(02)V99.
+      *
