@@ -1,0 +1,23 @@
+       01  :XX-:REG-MOVTO.
+           05 :XX-:TIPO-REG-MOVTO-M        PIC X(01).
+           05 FILLER                       PIC X(32).
+      *
+       01  :XX-:REG-MOVTO-HEADER REDEFINES WS-REG-MOVTO.
+           05 FILLER                       PIC X(01).
+           05 :XX-:SIGLA-SYS-CAD-M         PIC X(05).
+           05 :XX-:ANO-MES-REF-CAD-M       PIC X(06).
+           05 FILLER                       PIC X(21).
+      *
+       01  :XX-:REG-MOVTO-DATA REDEFINES WS-REG-MOVTO.
+           05 FILLER                       PIC X(01).
+           05 :XX-:NUMMOVTO-M              PIC 9(08).
+           05 :XX-:DATAMOVTO-M             PIC 9(08).
+           05 :XX-:HORAMOVTO-M             PIC 9(06).
+           05 :XX-:CODPRODMOVTO-M          PIC 9(04).
+           05 :XX-:TIPOMOVTO-M             PIC X(01).
+           05 :XX-:QTDMOVTO-M              PIC 9(08) COMP-3.
+      *
+       01  :XX-:REG-MOVTO-TRAILER REDEFINES WS-REG-MOVTO.
+           05 FILLER                       PIC X(01).
+           05 :XX-:QTDREG-MOVTO-M          PIC 9(05).
+           05 FILLER                       PIC X(27).

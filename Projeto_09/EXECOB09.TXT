@@ -1,0 +1,7 @@
+//GPAZNN09 JOB SEUNOME,MSGCLASS=X,CLASS=C,NOTIFY=GPAZNN,TIME=(0,20)     00010001
+//*****************************************************************     00020000
+//STEP1    EXEC PGM=GPAZNN09,PARM='20201001'                            00021001
+//STEPLIB  DD DSN=GP.GERAL.LOADLIB,DISP=SHR                             00022000
+//CADPROD  DD DSN=GP.GPAZNN.CADPROD,DISP=SHR                            00023001
+//MOVTOEST DD DSN=GP.GPAZNN.MOVTOEST,DISP=SHR                           00023101
+//RELMOV01 DD SYSOUT=*                                                  00023201
