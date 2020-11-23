@@ -1,11 +1,11 @@
 # Projeto_10
-## Relatório de movimentação de estoque
+## Programa para carregar tabela DB2
 
 Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinametos.
 
 ## Objetivo
 
-O programa lê os produtos do arquivo sequencial CADPRDD1 e carregar a tabela TBPRODUTO, além disso é mostrado na SYSOUT a estatística do processamento.
+O programa lê os produtos do arquivo sequencial CADPRDD1 e carrega a tabela TBPRODUTO, além disso é mostrado na SYSOUT a estatística do processamento.
 
 ### Arquivos
 
