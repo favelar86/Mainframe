@@ -1,0 +1,19 @@
+      *--------------------------------------------------------------*
+      *                                                              *
+      *          BOOK DE ROTINA      - 9999-ERRO                     *
+      *          NOME DA BOOK        - ROTERRO                       *
+      *          NOME DO PDS         - GP.GPAZ04.BOOKLIB             *
+      *          VARIAVEIS USADAS    - WS-MSG   PIC X(60).           *
+      *                                WS-FS    PIC X(02).           *
+      *--------------------------------------------------------------*
+      *
+       9999-ERRO.
+           DISPLAY "================================================="
+           DISPLAY " MENSAGEM ..........: " WS-MSG
+           DISPLAY "FILE STATUS.........: " WS-FS
+           DISPLAY "================================================="
+           DISPLAY "==    TERMINO ANORMAL DO PROGRAMA GPAZ0403     =="
+           DISPLAY "================================================="
+           MOVE  16                        TO RETURN-CODE
+           STOP RUN
+           .
