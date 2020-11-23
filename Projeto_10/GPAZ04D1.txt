@@ -1,7 +1,7 @@
       *--------------------------------------------------------------*
       *                                                              *
-      *   OBJETIVO:                                                  *
-      *                                                              *
+      *   OBJETIVO: LER OS PRODUTOS DO ARQUIVO SEQUENCIAL CADPRDD1   *
+      *             E CARREGAR A TABELA TBPRODUTO                    *
       *                                                              *
       *--------------------------------------------------------------*
       *--------------------------------------------------------------*
@@ -143,7 +143,7 @@
            MOVE WS-CODPROD-D1              TO CODPROD
            MOVE +20                        TO DESCPROD-LEN
            MOVE WS-DESCPROD-D1             TO DESCPROD-TEXT
-           MOVE WS-UNIDPROD-D1              TO UNIDPROD
+           MOVE WS-UNIDPROD-D1             TO UNIDPROD
            MOVE WS-LOCALPROD-D1            TO LOCALPROD
            MOVE WS-QTDEST-D1               TO QTDEST
            MOVE WS-QTDMAX-D1               TO QTDMAX
