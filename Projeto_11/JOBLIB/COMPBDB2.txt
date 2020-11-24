@@ -1,0 +1,14 @@
+//GPAZ04D4 JOB FABIANO,MSGCLASS=X,CLASS=C,NOTIFY=GPAZ04,TIME=(0,40)
+//*-------------------------------------------------------------------*
+//*   JOB DE COMPILACAO DE PROGRAMA COBOL COM DB2 BATCH               *
+//*   TROCAR GPXXNN PELO SEU USUARIO                                  *
+//*-------------------------------------------------------------------*
+// JCLLIB ORDER=GP.LB.PROCLIB
+//COMPDB2B EXEC DFHCODB2,NAME='GPAZ04D4',INSTR='GPAZ04' MEMBRO
+//*
+//BIND.SYSTSIN  DD *
+DSN SYSTEM(DB2N)
+BIND PLAN(GPAZ04D4) MEM(GPAZ04D4) ACT(REP) ISOLATION(CS) -
+     LIB('SYS2.DB2.DBRMLIB.DATA')
+END
+//*

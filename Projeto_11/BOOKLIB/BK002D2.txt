@@ -1,0 +1,14 @@
+      *
+       01  : :REG-MOVPRDD2.
+           05 : :CODPROD-D2                PIC X(04).
+           05 : :DESCPROD-D2               PIC X(20).
+           05 : :UNIDPROD-D2               PIC X(05).
+           05 : :LOCALPROD-D2              PIC X(05).
+           05 : :QTDEST-D2                 PIC 9(05).
+           05 : :QTDMAX-D2                 PIC 9(05).
+           05 : :QTDMIN-D2                 PIC 9(05).
+           05 : :PRECOCOMPRA-D2            PIC 9(06)V99.
+           05 : :PRECOVENDA-D2             PIC 9(06)V99.
+           05 : :PERCOMIS-D2               PIC 9(02)V99.
+           05 : :TIPOMOVTO-D2              PIC X(01).
+      *
