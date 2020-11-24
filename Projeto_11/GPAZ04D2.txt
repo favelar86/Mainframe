@@ -1,8 +1,8 @@
       *--------------------------------------------------------------*
       *                                                              *
-      *   OBJETIVO:                                                  *
-      *                                                              *
-      *                                                              *
+      *   OBJETIVO: ATUALIZAR A TABELA TBPRODUTO COM BASE NA         *
+      *             MOVIMENTACAO DE ESTOQUE REGISTRADA NO ARQUIVO    *
+      *             SEQUENCIAL MOVPRDD2                              *
       *--------------------------------------------------------------*
       *--------------------------------------------------------------*
        IDENTIFICATION                      DIVISION.
