@@ -1,0 +1,16 @@
+//GPAZNND3 JOB 'SEUNOME',MSGCLASS=X,CLASS=C,NOTIFY=GPAZNN,TIME=1        00010009
+//STEP1A   EXEC PGM=IKJEFT01,DYNAMNBR=20,COND=(4,LT)                    00020002
+//STEPLIB  DD DISP=SHR,DSN=SYS2.DB2.SDSNLOAD                            00030002
+//DBRMLIB  DD DSN=SYS2.DB2.DBRMLIB.DATA,DISP=SHR                        00040002
+//SYSTSPRT DD SYSOUT=*                                                  00050002
+//SYSPRINT DD SYSOUT=*                                                  00060002
+//SYSUDUMP DD SYSOUT=*                                                  00070002
+//SYSOUT   DD SYSOUT=*                                                  00080002
+//REPORT   DD SYSOUT=*                                                  00090002
+//SYSTSIN  DD *                                                         00100002
+ DSN SYSTEM(DB2N)                                                       00110002
+ RUN  PROGRAM(GPAZNND3) PLAN(GPAZNND3) -                                00120009
+      LIB('GP.GERAL.LOADLIB')                                           00130002
+ END                                                                    00140002
+//RELREPO  DD SYSOUT=*                                                  00150005
+//                                                                      00160002
