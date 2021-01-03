@@ -25,9 +25,9 @@ O programa  seleciona itens da tabela TBPRODUTO aqueles cuja quantidade em estoq
 
 ### Resultados
 
-![SYSOUT](SYSOUT_01.png)
+![SYSOUT](SYSOUT.png)
 ![SYSOUT](RELATORIO_01.png)
-![SYSOUT](RELATORIO_01.png)
+![SYSOUT](RELATORIO_02.png)
 
 
 
