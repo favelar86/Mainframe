@@ -1,7 +1,7 @@
 # Projeto_12
 ## Programa para selecionar itens de uma tabela DB2 e mostrar em um relatório.
 
-Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinametos.
+Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinamentos.
 
 ## Objetivo
 
