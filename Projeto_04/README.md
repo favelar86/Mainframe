@@ -1,7 +1,7 @@
 # Projeto_04
 ## Merge entre três arquivos de entrada
 
-Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinametos.
+Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinamentos.
 
 ## Objetivo
 
