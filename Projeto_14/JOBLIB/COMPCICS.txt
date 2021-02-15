@@ -1,0 +1,6 @@
+//GPAZ04CS JOB 'FABIANO',MSGCLASS=X,CLASS=C,NOTIFY=GPAZ04,TIME=(0,20)
+//**********************************************************************
+//*                  COMPILA PROGRAMA CICS
+//**********************************************************************
+// JCLLIB ORDER=GP.LB.PROCLIB
+//CICSPGM  EXEC DFHCICS1,NAME=AZ04PGMM,INSTR='GPAZ04'

@@ -1,0 +1,92 @@
+      *----------------------------------------------------------------*
+       IDENTIFICATION                      DIVISION.
+      *----------------------------------------------------------------*
+       PROGRAM-ID.                         EEAZ04E8.
+      *----------------------------------------------------------------*
+       ENVIRONMENT                         DIVISION.
+      *----------------------------------------------------------------*
+       CONFIGURATION                       SECTION.
+       SPECIAL-NAMES.
+           DECIMAL-POINT IS COMMA.
+       INPUT-OUTPUT                        SECTION.
+       FILE-CONTROL.
+           SELECT CADPRD ASSIGN TO UT-S-CADPRD
+           FILE STATUS FS-CADPRD.
+           SELECT VCADPRD  ASSIGN TO DA-I-VCADPRD
+           ORGANIZATION IS INDEXED
+           ACCESS MODE IS RANDOM
+           RECORD KEY IS CODPROD
+           FILE STATUS FS-VCADPRD.
+      *----------------------------------------------------------------*
+       DATA                                DIVISION.
+      *----------------------------------------------------------------*
+       FILE                                SECTION.
+      *----------------------------------------------------------------*
+       FD  CADPRD
+           RECORDING MODE IS F.
+       01  REG-CADPRD                        PIC X(69).
+
+       FD  VCADPRD.
+       01  REG-VCADPRD.
+           05 CODPROD                        PIC X(04).
+           05 FILLER                         PIC X(65).
+      *----------------------------------------------------------------*
+       WORKING-STORAGE                     SECTION.
+      *----------------------------------------------------------------*
+       01  WS-REG-CADPRD                   PIC X(69).
+       01  WS-REG-VCADPRD                  PIC X(69).
+       01  FS-CADPRD                       PIC X(02).
+       01  FS-VCADPRD                      PIC X(02).
+       01  WS-CTLIDO                       PIC 9(04).
+       01  WS-CTGRAV                       PIC 9(04).
+      *----------------------------------------------------------------*
+       PROCEDURE                           DIVISION.
+      *----------------------------------------------------------------*
+       0000-PRINCIPAL.
+           PERFORM 1000-INICIALIZAR
+           PERFORM 2000-PROCESSAR UNTIL FS-CADPRD = "10"
+           PERFORM 3000-TERMINO
+           STOP RUN
+           .
+       1000-INICIALIZAR.
+           MOVE ZERO TO WS-CTLIDO WS-CTGRAV
+           OPEN INPUT CADPRD
+           IF FS-CADPRD NOT = "00"
+              DISPLAY "ERRO ABERTURA CADPRD"
+              STOP RUN
+           END-IF
+           OPEN OUTPUT VCADPRD
+           IF FS-VCADPRD NOT = "00"
+              DISPLAY "ERRO ABERTURA VCADPRD"
+              STOP RUN
+           END-IF
+           PERFORM 1500-LER-CADPRD
+           .
+       1500-LER-CADPRD.
+           READ CADPRD INTO WS-REG-CADPRD
+           IF FS-CADPRD = "00"
+              ADD 1 TO WS-CTLIDO
+           ELSE
+              IF FS-CADPRD NOT = "10"
+                 DISPLAY "ERRO ABERTURA CADPRD"
+                 STOP RUN
+              END-IF
+           END-IF
+           .
+       2000-PROCESSAR.
+           MOVE WS-REG-CADPRD TO WS-REG-VCADPRD
+           WRITE REG-VCADPRD FROM WS-REG-VCADPRD
+           IF FS-VCADPRD NOT = "00" AND NOT = "22" AND NOT = "23"
+              DISPLAY "ERRO GRAVACAO VCADPRD"
+              DISPLAY "FILE STATUS = " FS-VCADPRD
+              STOP RUN
+           END-IF
+           ADD 1 TO WS-CTGRAV
+           PERFORM 1500-LER-CADPRD
+           .
+       3000-TERMINO.
+           CLOSE CADPRD
+           CLOSE VCADPRD
+           DISPLAY "LIDOS = " WS-CTLIDO
+           DISPLAY "GRAVADO = " WS-CTGRAV
+           .
