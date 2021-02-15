@@ -1,5 +1,5 @@
 # Mainframe
- Projetos realizados durante treinamento de desenvolvedor mainframe.
+ Projetos realizado durante treinamento de desenvolvedor mainframe.
 
 ## COBOL
 
