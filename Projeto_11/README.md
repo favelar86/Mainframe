@@ -1,7 +1,7 @@
 # Projeto_11
 ## Programa para atualizar tabela DB2
 
-Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinametos.
+Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinamentos.
 
 ## Objetivo
 

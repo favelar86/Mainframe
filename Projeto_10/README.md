@@ -1,7 +1,7 @@
 # Projeto_10
 ## Programa para carregar tabela DB2
 
-Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinametos.
+Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinamentos.
 
 ## Objetivo
 

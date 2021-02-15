@@ -1,7 +1,7 @@
 # Projeto_13
 ## Programa para fazer manutenção em uma tabela DB2 com base no arquivo MOVPRDD4.
 
-Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinametos.
+Programa desenvolvido durante o treinamento de Cobol da escola Grande Porte treinamentos.
 
 ## Objetivo
 
